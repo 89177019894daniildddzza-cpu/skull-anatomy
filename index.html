@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Анатомия черепа человека</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d1117;color:#e6e6e6;font-family:'Segoe UI',Arial,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+h1{padding:18px 0 8px;font-size:22px;color:#c9d1d9;letter-spacing:1px}
+.tabs{display:flex;gap:8px;margin:10px 0 16px}
+.tab-btn{padding:10px 28px;border:1px solid #30363d;background:#161b22;color:#8b949e;border-radius:6px;cursor:pointer;font-size:14px;transition:all .2s}
+.tab-btn.active{background:#1f6feb;border-color:#1f6feb;color:#fff}
+.tab-btn:hover{border-color:#58a6ff;color:#58a6ff}
+.main{display:none;flex-direction:row;align-items:flex-start;justify-content:center;gap:24px;padding:0 16px 20px;flex-wrap:wrap}
+.main.active{display:flex}
+.svg-wrap{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:12px;position:relative}
+.bone{cursor:pointer;transition:filter .15s,stroke .15s,fill .15s;stroke:#3d3d3d;stroke-width:1.2;stroke-linejoin:round}
+.bone:hover{filter:brightness(1.35) drop-shadow(0 0 4px rgba(88,166,255,.4));stroke:#58a6ff;stroke-width:1.8}
+.bone.sel{fill:#58a6ff!important;stroke:#fff;stroke-width:2;filter:drop-shadow(0 0 10px rgba(88,166,255,.5))}
+.dark-zone{cursor:pointer;transition:filter .15s;stroke:#2a2a2a;stroke-width:1}
+.dark-zone:hover{filter:brightness(1.6);stroke:#58a6ff;stroke-width:1.5}
+.dark-zone.sel{fill:#58a6ff!important;stroke:#fff;stroke-width:2;filter:drop-shadow(0 0 8px rgba(88,166,255,.5))}
+#tooltip{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:rgba(22,27,34,.95);border:1px solid #30363d;padding:12px 28px;border-radius:10px;text-align:center;z-index:99;min-width:320px;pointer-events:none;transition:border-color .2s}
+#tooltip.on{border-color:#58a6ff}
+#tooltip .name{font-size:18px;font-weight:700;color:#58a6ff;margin-top:2px}
+#tooltip .sub{font-size:11px;color:#484f58;margin-top:3px}
+.legend{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:14px;width:230px;max-height:540px;overflow-y:auto}
+.legend h3{font-size:13px;color:#8b949e;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.lg-item{display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:6px;font-size:12px;cursor:pointer;transition:background .15s;color:#c9d1d9}
+.lg-item:hover{background:rgba(88,166,255,.12)}
+.lg-item.sel{background:rgba(88,166,255,.25)}
+.lg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;border:1px solid rgba(255,255,255,.15)}
+.hint{font-size:12px;color:#484f58;text-align:center;padding:6px 0 14px}
+</style>
+</head>
+<body>
+
+<h1>Анатомия черепа человека</h1>
+<div class="tabs">
+  <button class="tab-btn active" data-v="frontal">Фронтальный вид</button>
+  <button class="tab-btn" data-v="lateral">Боковой вид</button>
+</div>
+
+<div id="tooltip">
+  <div style="font-size:13px;color:#8b949e">Нажми на кость</div>
+  <div class="name" id="tname"></div>
+  <div class="sub">Клик по пустому месту — сброс</div>
+</div>
+
+<!-- ==================== ФРОНТАЛЬНЫЙ ВИД ==================== -->
+<div id="frontal" class="main active">
+<div class="svg-wrap">
+<svg viewBox="0 0 420 540" width="420" height="540">
+  <!-- Лобная кость -->
+  <path class="bone" data-name="Лобная кость (Os frontale)" fill="#e8dcc8"
+    d="M112,210 C112,100 150,48 210,48 C270,48 308,100 308,210
+       L296,205 C296,115 262,64 210,64 C158,64 124,115 124,205 Z"/>
+  <!-- Надбровные дуги -->
+  <path class="bone" data-name="Надбровные дуги (Arcus superciliares)" fill="#ddd0b8"
+    d="M124,205 L296,205 L292,218 C280,210 250,206 210,206 C170,206 140,210 128,218 Z"/>
+
+  <!-- Теменная правая -->
+  <path class="bone" data-name="Теменная кость правая (Os parietale dextrum)" fill="#d8cab0"
+    d="M296,205 L308,210 C308,140 290,90 258,62 L248,76 C275,100 292,145 296,205 Z"/>
+  <!-- Теменная левая -->
+  <path class="bone" data-name="Теменная кость левая (Os parietale sinistrum)" fill="#d8cab0"
+    d="M124,205 L112,210 C112,140 130,90 162,62 L172,76 C145,100 128,145 124,205 Z"/>
+
+  <!-- Височная правая -->
+  <path class="bone" data-name="Височная кость правая (Os temporale dextrum)" fill="#cfc0a5"
+    d="M308,210 L328,218 L334,275 L322,300 L308,285 L302,250 L296,218 Z"/>
+  <!-- Височная левая -->
+  <path class="bone" data-name="Височная кость левая (Os temporale sinistrum)" fill="#cfc0a5"
+    d="M112,210 L92,218 L86,275 L98,300 L112,285 L118,250 L124,218 Z"/>
+
+  <!-- Клиновидная (крылья) правая -->
+  <path class="bone" data-name="Клиновидная кость правая (Os sphenoidale dextrum)" fill="#d4c5a9"
+    d="M296,218 L302,250 L290,260 L280,235 Z"/>
+  <!-- Клиновидная левая -->
+  <path class="bone" data-name="Клиновидная кость левая (Os sphenoidale sinistrum)" fill="#d4c5a9"
+    d="M124,218 L118,250 L130,260 L140,235 Z"/>
+
+  <!-- Правая глазница -->
+  <path class="dark-zone" data-name="Глазница правая (Orbita dextra)" fill="#2a2520"
+    d="M225,218 C235,210 270,210 285,218 C296,228 298,258 288,272
+       C275,284 238,284 226,272 C216,258 215,228 225,218 Z"/>
+  <!-- Левая глазница -->
+  <path class="dark-zone" data-name="Глазница левая (Orbita sinistra)" fill="#2a2520"
+    d="M195,218 C185,210 150,210 135,218 C124,228 122,258 132,272
+       C145,284 182,284 194,272 C204,258 205,228 195,218 Z"/>
+
+  <!-- Носовые кости -->
+  <path class="bone" data-name="Носовые кости (Ossa nasalia)" fill="#e0d4bc"
+    d="M202,212 L210,200 L218,212 L216,248 L210,254 L204,248 Z"/>
+
+  <!-- Решётчатая кость -->
+  <ellipse class="bone" data-name="Решётчатая кость (Os ethmoidale)" fill="#c8b898"
+    cx="210" cy="215" rx="14" ry="9"/>
+
+  <!-- Слёзная правая -->
+  <circle class="bone" data-name="Слёзная кость правая (Os lacrimale dextrum)" fill="#cfc0a5"
+    cx="232" cy="222" r="7"/>
+  <!-- Слёзная левая -->
+  <circle class="bone" data-name="Слёзная кость левая (Os lacrimale sinistrum)" fill="#cfc0a5"
+    cx="188" cy="222" r="7"/>
+
+  <!-- Полость носа -->
+  <path class="dark-zone" data-name="Полость носа (Cavitas nasi)" fill="#2a2520"
+    d="M196,260 C200,250 210,244 210,244 C210,244 220,250 224,260
+       C228,272 226,300 222,312 C218,322 210,328 210,328
+       C210,328 202,322 198,312 C194,300 192,272 196,260 Z"/>
+
+  <!-- Скуловая правая -->
+  <path class="bone" data-name="Скуловая кость правая (Os zygomaticum dextrum)" fill="#ddd0b8"
+    d="M290,240 L322,248 L318,285 L302,300 L288,280 L285,258 Z"/>
+  <!-- Скуловая левая -->
+  <path class="bone" data-name="Скуловая кость левая (Os zygomaticum sinistrum)" fill="#ddd0b8"
+    d="M130,240 L98,248 L102,285 L118,300 L132,280 L135,258 Z"/>
+
+  <!-- Верхняя челюсть -->
+  <path class="bone" data-name="Верхняя челюсть (Maxilla)" fill="#e0d4bc"
+    d="M148,285 L168,272 L195,300 L210,310 L225,300 L252,272 L272,285
+       L280,340 L268,365 L210,378 L152,365 L140,340 Z"/>
+
+  <!-- Сошник -->
+  <rect class="bone" data-name="Сошник (Vomer)" fill="#c8b898"
+    x="206" y="270" width="8" height="42" rx="2"/>
+
+  <!-- Верхние зубы -->
+  <path class="bone" data-name="Верхние зубы (Dentes maxillae)" fill="#f5f0e0"
+    d="M165,365 L210,380 L255,365 L255,382 L210,396 L165,382 Z"/>
+
+  <!-- Нижняя челюсть -->
+  <path class="bone" data-name="Нижняя челюсть (Mandibula)" fill="#d8cab0"
+    d="M138,370 L152,362 L210,385 L268,362 L282,370
+       L290,410 L278,450 L252,472 L210,482 L168,472 L142,450 L130,410 Z"/>
+
+  <!-- Нижние зубы -->
+  <path class="bone" data-name="Нижние зубы (Dentes mandibulae)" fill="#f0ead5"
+    d="M170,388 L210,400 L250,388 L250,402 L210,414 L170,402 Z"/>
+
+  <!-- Нёбная правая -->
+  <path class="bone" data-name="Нёбная кость правая (Os palatinum dextrum)" fill="#c8b898"
+    d="M240,340 L260,335 L258,355 L240,358 Z"/>
+  <!-- Нёбная левая -->
+  <path class="bone" data-name="Нёбная кость левая (Os palatinum sinistrum)" fill="#c8b898"
+    d="M180,340 L160,335 L162,355 L180,358 Z"/>
+</svg>
+</div>
+<div class="legend" id="leg-frontal"></div>
+</div>
+
+<!-- ==================== БОКОВОЙ ВИД ==================== -->
+<div id="lateral" class="main">
+<div class="svg-wrap">
+<svg viewBox="0 0 520 540" width="520" height="540">
+  <!-- Лобная кость -->
+  <path class="bone" data-name="Лобная кость (Os frontale)" fill="#e8dcc8"
+    d="M138,220 C138,115 180,52 255,52 C285,52 305,62 318,82
+       L302,98 C292,78 275,68 255,68 C192,68 155,125 155,220 Z"/>
+
+  <!-- Теменная кость -->
+  <path class="bone" data-name="Теменная кость (Os parietale)" fill="#ddd0b8"
+    d="M255,52 C340,52 420,100 432,195 L432,240 L415,240 L415,200
+       C408,115 340,68 265,68 L318,82 C328,72 295,52 255,52 Z"/>
+
+  <!-- Затылочная кость -->
+  <path class="bone" data-name="Затылочная кость (Os occipitale)" fill="#d4c5a9"
+    d="M432,195 L432,240 L442,280 L436,330 L410,360 L388,348
+       L405,310 L415,270 L415,240 Z"/>
+
+  <!-- Височная кость -->
+  <path class="bone" data-name="Височная кость (Os temporale)" fill="#cfc0a5"
+    d="M310,240 L415,240 L415,270 L405,310 L380,320 L345,310 L322,280 Z"/>
+
+  <!-- Клиновидная кость -->
+  <path class="bone" data-name="Клиновидная кость (Os sphenoidale)" fill="#d8cab0"
+    d="M218,230 L310,240 L322,280 L300,300 L248,290 L222,262 Z"/>
+
+  <!-- Носовая кость -->
+  <path class="bone" data-name="Носовая кость (Os nasale)" fill="#e0d4bc"
+    d="M125,220 L155,220 L148,252 L120,245 Z"/>
+
+  <!-- Решётчатая кость -->
+  <path class="bone" data-name="Решётчатая кость (Os ethmoidale)" fill="#c8b898"
+    d="M155,220 L185,225 L178,255 L148,252 Z"/>
+
+  <!-- Слёзная кость -->
+  <circle class="bone" data-name="Слёзная кость (Os lacrimale)" fill="#cfc0a5"
+    cx="185" cy="235" r="9"/>
+
+  <!-- Глазница -->
+  <path class="dark-zone" data-name="Глазница (Orbita)" fill="#2a2520"
+    d="M168,238 C178,226 215,226 232,238 C244,250 246,278 234,292
+       C218,306 180,306 168,292 C156,278 156,250 168,238 Z"/>
+
+  <!-- Скуловая кость -->
+  <path class="bone" data-name="Скуловая кость (Os zygomaticum)" fill="#ddd0b8"
+    d="M238,260 L285,270 L280,308 L248,300 Z"/>
+
+  <!-- Верхняя челюсть -->
+  <path class="bone" data-name="Верхняя челюсть (Maxilla)" fill="#e0d4bc"
+    d="M108,280 L140,268 L175,290 L220,300 L240,310 L245,352
+       L230,375 L180,380 L138,365 L112,335 Z"/>
+
+  <!-- Нёбная кость -->
+  <path class="bone" data-name="Нёбная кость (Os palatinum)" fill="#c8b898"
+    d="M240,310 L268,315 L265,340 L242,335 Z"/>
+
+  <!-- Сошник -->
+  <rect class="bone" data-name="Сошник (Vomer)" fill="#c8b898"
+    x="126" y="282" width="8" height="40" rx="2" transform="rotate(-8,130,302)"/>
+
+  <!-- Наружный слуховой проход -->
+  <circle class="dark-zone" data-name="Наружный слуховой проход (Meatus acusticus ext.)" fill="#2a2520"
+    cx="355" cy="275" r="13"/>
+
+  <!-- Верхние зубы -->
+  <path class="bone" data-name="Верхние зубы (Dentes maxillae)" fill="#f5f0e0"
+    d="M115,365 L180,382 L230,375 L230,390 L180,396 L115,380 Z"/>
+
+  <!-- Нижняя челюсть -->
+  <path class="bone" data-name="Нижняя челюсть (Mandibula)" fill="#d8cab0"
+    d="M102,345 L120,335 L138,365 L180,385 L230,380 L262,365
+       L290,375 L302,395 L296,435 L280,465 L252,482 L200,488
+       L155,478 L118,455 L98,420 L92,380 Z"/>
+
+  <!-- Нижние зубы -->
+  <path class="bone" data-name="Нижние зубы (Dentes mandibulae)" fill="#f0ead5"
+    d="M120,385 L180,398 L228,392 L228,406 L180,412 L120,400 Z"/>
+
+  <!-- Мыщелковый отросток -->
+  <ellipse class="bone" data-name="Мыщелковый отросток (Processus condylaris)" fill="#cfc0a5"
+    cx="310" cy="330" rx="18" ry="12" transform="rotate(-15,310,330)"/>
+
+  <!-- Венечный отросток -->
+  <path class="bone" data-name="Венечный отросток (Processus coronoideus)" fill="#cfc0a5"
+    d="M275,310 L290,290 L298,310 L288,330 Z"/>
+</svg>
+</div>
+<div class="legend" id="leg-lateral"></div>
+</div>
+
+<div class="hint">🖱️ Наведи на кость для подсветки • Клик — выбрать • Клик мимо — сброс</div>
+
+<script>
+let sel=null;
+const tip=document.getElementById('tooltip'),tn=document.getElementById('tname');
+
+document.querySelectorAll('.tab-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.main').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById(b.dataset.v).classList.add('active');
+    clearSel();
+  });
+});
+
+function clearSel(){
+  document.querySelectorAll('.sel').forEach(e=>e.classList.remove('sel'));
+  sel=null;tn.textContent='';tip.classList.remove('on');
+}
+
+document.addEventListener('click',e=>{
+  const bone=e.target.closest('.bone,.dark-zone');
+  const lg=e.target.closest('.lg-item');
+  if(bone){
+    if(sel===bone){clearSel();return;}
+    clearSel();
+    bone.classList.add('sel');sel=bone;
+    tn.textContent=bone.dataset.name;tip.classList.add('on');
+    const view=bone.closest('.main');
+    if(view){
+      const idx=[...view.querySelectorAll('.bone,.dark-zone')].indexOf(bone);
+      const li=view.querySelector('.legend').children[idx+1];
+      if(li)li.classList.add('sel');
+    }
+  }else if(lg){
+    const view=lg.closest('.main');
+    const idx=+lg.dataset.i;
+    const bones=view.querySelectorAll('.bone,.dark-zone');
+    if(bones[idx]){
+      if(sel===bones[idx]){clearSel();return;}
+      clearSel();
+      bones[idx].classList.add('sel');sel=bones[idx];
+      tn.textContent=bones[idx].dataset.name;tip.classList.add('on');
+      lg.classList.add('sel');
+    }
+  }else{clearSel();}
+});
+
+function buildLegend(id){
+  const view=document.getElementById(id);
+  const leg=view.querySelector('.legend');
+  leg.innerHTML='<h3>Кости черепа</h3>';
+  view.querySelectorAll('.bone,.dark-zone').forEach((b,i)=>{
+    const d=document.createElement('div');
+    d.className='lg-item';d.dataset.i=i;
+    const dot=document.createElement('div');
+    dot.className='lg-dot';
+    dot.style.background=b.getAttribute('fill')||'#999';
+    const sp=document.createElement('span');
+    sp.textContent=b.dataset.name;
+    d.append(dot,sp);leg.appendChild(d);
+  });
+}
+buildLegend('frontal');
+buildLegend('lateral');
+</script>
+</body>
+</html>
